@@ -5,8 +5,6 @@ from loguru import logger
 
 logger.add("debug.log", format="{time}{message}", level="DEBUG")
 
-
-
 class VKphotos():
     def __init__(self, vktoken, vkname, ydtoken):
         self.token = vktoken
@@ -50,8 +48,10 @@ class VKphotos():
 
 
     def save_photos(self):
-        new_papka = os.path.join(os.getcwd(), "Папка загрузки")
-        os.mkdir(new_papka)
+        if not os.path.isdir("Папка загрузки"):
+            os.mkdir("Папка загрузки")
+        else:
+            pass
         item = self._get_photos()
         for name, url in item.items():
             response = requests.get(url[0])
